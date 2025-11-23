@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>University Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="split-container">
+        <!-- LEFT: Logo -->
+        <div class="left-panel">
+            <img src="https://newerp.kluniversity.in/images/smalllogo.png" class="university-logo">
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div class="right-panel">
+            
+            <!-- Student Form -->
+            <div class="login-wrapper" id="student-form">
+                <div class="login-title">Student Login</div>
+                <form action="/student/login" method="POST">
+                    <div class="input-group">
+                        <label class="input-label">Username *</label>
+                        <input type="text" name="username" class="form-control-login" value="2520030276" required>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Password *</label>
+                        <input type="password" name="password" class="form-control-login" value="........" required>
+                    </div>
+                    <div style="font-size:13px; color:#666; margin-bottom:15px;">
+                        <input type="checkbox"> Remember Me
+                    </div>
+                    <button type="submit" class="btn-login">Login</button>
+                </form>
+                <div class="role-toggle">
+                    Are you a Faculty? <a onclick="toggleForm()">Login here</a>
+                </div>
+            </div>
+
+            <!-- Teacher Form -->
+            <div class="login-wrapper" id="teacher-form" style="display:none;">
+                <div class="login-title" style="color:#c0392b;">Faculty Login</div>
+                <form action="/teacher/login" method="POST">
+                    <div class="input-group">
+                        <label class="input-label" style="color:#c0392b;">Faculty ID *</label>
+                        <input type="text" name="username" class="form-control-login" style="border-color:#c0392b;" required>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label" style="color:#c0392b;">Password *</label>
+                        <input type="password" name="password" class="form-control-login" style="border-color:#c0392b;" required>
+                    </div>
+                    <button type="submit" class="btn-login" style="background-color:#c0392b;">Login</button>
+                </form>
+                <div class="role-toggle">
+                    Are you a Student? <a onclick="toggleForm()" style="color:#c0392b;">Login here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            var s = document.getElementById('student-form');
+            var t = document.getElementById('teacher-form');
+            if(s.style.display === 'none') { s.style.display='block'; t.style.display='none'; }
+            else { s.style.display='none'; t.style.display='block'; }
+        }
+    </script>
+</body>
+</html>

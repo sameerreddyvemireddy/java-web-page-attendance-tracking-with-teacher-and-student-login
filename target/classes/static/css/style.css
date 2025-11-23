@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+    --primary-blue: #23527c;
+    --accent-color: #3498db;
+    --header-bg: #ffffff;
+    --bg-color: #f4f7f6;
+    --text-color: #333;
+    --table-header: #2c3e50;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* ================= LOGIN PAGE STYLES ================= */
+.split-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.left-panel {
+    flex: 1.2;
+    background-color: #1e2a45;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.university-logo {
+    width: 280px;
+    filter: drop-shadow(0 0 15px rgba(255,255,255, 0.1));
+}
+
+.right-panel {
+    flex: 0.8;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login-wrapper {
+    width: 350px;
+    padding: 40px;
+}
+
+.login-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-label {
+    position: absolute;
+    top: -9px;
+    left: 10px;
+    background: white;
+    padding: 0 5px;
+    font-size: 12px;
+    color: var(--primary-blue);
+    font-weight: 500;
+}
+
+.form-control-login {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #27ae60;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.role-toggle {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+}
+.role-toggle a { color: var(--primary-blue); font-weight: bold; cursor: pointer; }
+
+/* ================= DASHBOARD STYLES ================= */
+.header {
+    background: white;
+    padding: 15px 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--accent-color);
+}
+
+.main-content {
+    padding: 30px;
+    max-width: 95%; /* Uses more screen width for the big table */
+    margin: 0 auto;
+}
+
+/* Box for Search/Upload */
+.control-box {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    margin-bottom: 30px;
+    border: 1px solid #eee;
+}
+
+.form-group-dash {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-group-dash label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-control-dash {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-dash {
+    padding: 10px 25px;
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 38px; /* Matches input height approx */
+}
+
+/* THE TABLE */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    font-size: 13px;
+}
+
+.attendance-table th {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.attendance-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee;
+    color: #444;
+}
+
+.attendance-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.attendance-table tr:hover {
+    background-color: #f1f1f1;
+}

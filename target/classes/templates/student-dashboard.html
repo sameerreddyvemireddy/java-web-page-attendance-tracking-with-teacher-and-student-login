@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="header">
+        <h3 style="color: #23527c; margin:0;">Student Portal</h3>
+        <div>User: 2520030276 | Target: 85% by Dec 30</div>
+    </div>
+
+    <div class="main-content">
+        <form action="/student/search" method="POST">
+            <div class="control-box">
+                <div class="form-group-dash">
+                    <label>Academic Year</label>
+                    <select class="form-control-dash"><option>2025-2026</option></select>
+                </div>
+                <div class="form-group-dash">
+                    <label>Semester</label>
+                    <select class="form-control-dash"><option>Odd Sem</option></select>
+                </div>
+                <button type="submit" class="btn-dash">Search</button>
+            </div>
+        </form>
+
+        <div th:if="${searched}">
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Desc</th>
+                        <th>Ltps</th>
+                        <th>Sec</th>
+                        <th>Year</th>
+                        <th>Sem</th>
+                        <th>Fr Date</th>
+                        <th>Cond</th>
+                        <th>Att</th>
+                        <th>Abs</th>
+                        <th>Tcbr</th>
+                        <th>%</th>
+                        <!-- NEW COLUMN -->
+                        <th style="width: 250px;">Risk Assessment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${courses}">
+                        <td th:text="${c.courseCode}"></td>
+                        <td th:text="${c.courseDesc}"></td>
+                        <td th:text="${c.ltps}"></td>
+                        <td th:text="${c.section}"></td>
+                        <td th:text="${c.year}"></td>
+                        <td th:text="${c.semester}"></td>
+                        <td th:text="${c.frDate}"></td>
+                        <td th:text="${c.totalConducted}"></td>
+                        <td th:text="${c.totalAttended}"></td>
+                        <td th:text="${c.totalAbsent}"></td>
+                        <td th:text="${c.tcbr}"></td>
+                        <td th:text="${#numbers.formatDecimal(c.percentage, 1, 0) + '%'}"></td>
+                        
+                        <!-- NEW DATA -->
+                        <td th:style="${c.percentage >= 85 ? 'color:#27ae60; font-weight:bold;' : 'color:#c0392b; font-weight:bold;'}" 
+                            th:text="${c.riskMessage}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

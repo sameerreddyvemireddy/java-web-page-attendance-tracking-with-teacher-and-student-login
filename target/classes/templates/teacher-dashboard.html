@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Faculty Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="header">
+        <h3 style="color: #c0392b; margin:0;">Faculty Portal</h3>
+    </div>
+
+    <div class="main-content">
+        <form action="/teacher/upload" method="POST" enctype="multipart/form-data">
+            <div class="control-box">
+                <div class="form-group-dash">
+                    <label>1. Upload Timetable</label>
+                    <input type="file" name="timetable" class="form-control-dash">
+                </div>
+                <div class="form-group-dash">
+                    <label>2. Upload Student Data</label>
+                    <input type="file" name="students" class="form-control-dash" required>
+                </div>
+                <button type="submit" class="btn-dash" style="background-color:#c0392b;">Analyze Data</button>
+            </div>
+        </form>
+
+        <div th:if="${uploaded}">
+            <h4 style="margin-top:30px;">Student Attendance Register</h4>
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Desc</th>
+                        <th>Ltps</th>
+                        <th>Sec</th>
+                        <th>Year</th>
+                        <th>Sem</th>
+                        <th>Fr Date</th>
+                        <th>Cond</th>
+                        <th>Att</th>
+                        <th>Abs</th>
+                        <th>Tcbr</th>
+                        <th>%</th>
+                        <!-- NEW COLUMN -->
+                        <th style="width: 250px;">Risk Assessment (Target 85%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${courses}">
+                        <td th:text="${c.courseCode}"></td>
+                        <td th:text="${c.courseDesc}"></td>
+                        <td th:text="${c.ltps}"></td>
+                        <td th:text="${c.section}"></td>
+                        <td th:text="${c.year}"></td>
+                        <td th:text="${c.semester}"></td>
+                        <td th:text="${c.frDate}"></td>
+                        <td th:text="${c.totalConducted}"></td>
+                        <td th:text="${c.totalAttended}"></td>
+                        <td th:text="${c.totalAbsent}"></td>
+                        <td th:text="${c.tcbr}"></td>
+                        <td th:text="${#numbers.formatDecimal(c.percentage, 1, 0) + '%'}"></td>
+                        
+                        <!-- NEW DATA -->
+                        <td th:style="${c.percentage >= 85 ? 'color:#27ae60; font-weight:bold;' : 'color:#c0392b; font-weight:bold;'}" 
+                            th:text="${c.riskMessage}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div th:if="${timetable != null}" style="margin-top:30px;">
+                <h4>Class Timetable</h4>
+                <table class="attendance-table">
+                    <thead>
+                        <tr><th>Day</th><th>Slot 1</th><th>Slot 2</th><th>Slot 3</th><th>Slot 4</th><th>Slot 5</th><th>Slot 6</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="r : ${timetable}">
+                            <td th:text="${r.day}" style="font-weight:bold;"></td>
+                            <td th:text="${r.slot1}"></td><td th:text="${r.slot2}"></td><td th:text="${r.slot3}"></td>
+                            <td th:text="${r.slot4}"></td><td th:text="${r.slot5}"></td><td th:text="${r.slot6}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
