@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 @Data
 @NoArgsConstructor
 public class Course {
-    // Excel Data Fields
+    // Excel Data Fields (Unchanged)
     private String courseCode;
     private String courseDesc;
     private String ltps;      
@@ -24,7 +24,7 @@ public class Course {
     private int tcbr;
     private double percentage;
 
-    // PREDICTION LOGIC SETTINGS
+    // PREDICTION LOGIC DATES
     private final LocalDate TODAY = LocalDate.of(2025, 11, 22);
     private final LocalDate END_SEM = LocalDate.of(2025, 12, 30);
 
@@ -45,7 +45,7 @@ public class Course {
         this.percentage = conducted == 0 ? 0.0 : ((double)attended / conducted) * 100;
     }
 
-    // --- LOGIC FOR RISK ASSESSMENT ---
+    // --- LOGIC ---
 
     // 1. Calculate remaining working days (Mon-Fri)
     public int getRemainingClassesEst() {
@@ -56,19 +56,12 @@ public class Course {
         return (int) days; 
     }
 
-    // 2. How many total classes will happen by Dec 30?
+    // 2. Total classes by Dec 30
     public int getTotalProjectedClasses() {
         return totalConducted + getRemainingClassesEst();
     }
 
-    // 3. Max possible % if I attend ALL remaining classes
-    public double getMaxPossiblePercentage() {
-        int totalProjected = getTotalProjectedClasses();
-        int potentialAttended = totalAttended + getRemainingClassesEst();
-        return ((double) potentialAttended / totalProjected) * 100;
-    }
-
-    // 4. Classes needed to hit 85%
+    // 3. Classes needed for 85%
     public int getClassesNeededForTarget() {
         int totalProjected = getTotalProjectedClasses();
         int requiredAttendance = (int) Math.ceil(0.85 * totalProjected);
@@ -76,20 +69,38 @@ public class Course {
         return Math.max(needed, 0);
     }
 
-    // 5. The Message for the Dashboard
+    // 4. GAINING PERCENTAGE (Max Possible if I attend ALL remaining) - Used for New Column
+    public double getMaxPossiblePercentage() {
+        int totalProjected = getTotalProjectedClasses();
+        if (totalProjected == 0) return 0.0;
+        int potentialAttended = totalAttended + getRemainingClassesEst();
+        return ((double) potentialAttended / totalProjected) * 100;
+    }
+
+    // 5. LOSING PERCENTAGE (Min Possible if I miss ALL remaining) - Used for New Column
+    public double getMinPossiblePercentage() {
+        int totalProjected = getTotalProjectedClasses();
+        if (totalProjected == 0) return 0.0;
+        // Assume student attends 0 more classes, so attended remains same
+        return ((double) totalAttended / totalProjected) * 100;
+    }
+
+    // 6. The Detailed Message for the Dashboard (Action Plan)
     public String getRiskMessage() {
         int needed = getClassesNeededForTarget();
-        int remaining = getRemainingClassesEst();
+        int min = (int) getMinPossiblePercentage();
+        int max = (int) getMaxPossiblePercentage();
 
+        // Base Logic for 85%
+        String action;
         if (percentage >= 85 && needed == 0) {
-            return "Safe (" + (int)percentage + "%) - Maintain streak";
-        } 
-        else if (remaining < needed) {
-            // Even if they attend everything, they fail 85%
-            return "CRITICAL: Max possible is only " + (int)getMaxPossiblePercentage() + "%";
-        } 
-        else {
-            return "Risk: Attend next " + needed + " classes by Dec 30";
+            action = "Safe. Maintain streak.";
+        } else if (max < 85) {
+            action = "CRITICAL: Cannot reach 85%.";
+        } else {
+            action = "Action: Attend next " + needed + " classes.";
         }
+
+        return action; // Returning just the action, as percentages are now in columns
     }
 }

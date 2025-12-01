@@ -41,7 +41,12 @@
                         <th>Abs</th>
                         <th>Tcbr</th>
                         <th>%</th>
-                        <!-- NEW COLUMN -->
+                        
+                        <!-- NEW COLUMNS REQUESTED -->
+                        <th>Losing %</th>
+                        <th>Gaining %</th>
+
+                        <!-- EXISTING FUNCTIONALITY -->
                         <th style="width: 250px;">Risk Assessment</th>
                     </tr>
                 </thead>
@@ -60,7 +65,14 @@
                         <td th:text="${c.tcbr}"></td>
                         <td th:text="${#numbers.formatDecimal(c.percentage, 1, 0) + '%'}"></td>
                         
-                        <!-- NEW DATA -->
+                        <!-- NEW DATA: LOSING AND GAINING PERCENTAGE -->
+                        <td style="color: #c0392b; font-weight:bold;" 
+                            th:text="${#numbers.formatDecimal(c.minPossiblePercentage, 1, 0) + '%'}"></td>
+                            
+                        <td style="color: #27ae60; font-weight:bold;" 
+                            th:text="${#numbers.formatDecimal(c.maxPossiblePercentage, 1, 0) + '%'}"></td>
+                        
+                        <!-- EXISTING FUNCTIONALITY -->
                         <td th:style="${c.percentage >= 85 ? 'color:#27ae60; font-weight:bold;' : 'color:#c0392b; font-weight:bold;'}" 
                             th:text="${c.riskMessage}">
                         </td>
